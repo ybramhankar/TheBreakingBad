@@ -47,10 +47,3 @@ const App = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: baseColor.pageBackground,
-  },
-});

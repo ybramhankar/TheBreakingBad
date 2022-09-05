@@ -5,20 +5,33 @@ import {useSelector, useDispatch} from 'react-redux';
 import Card from '../components/Card';
 import {useRoute} from '@react-navigation/native';
 import MainHeader from '../components/MainHeader';
+import styled from 'styled-components';
 
 const Favorite = props => {
   const favList = useSelector(state => state.favorites);
   console.log(favList);
   const route = useRoute();
+
+  const Container = styled.View`
+    background-color: ${props => props.bgColor};
+    flex: 1;
+  `;
+  const BodyContainer = styled.View`
+    flex: 1;
+    align-self: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+  `;
+
   return (
-    <View style={styles.mainContainer}>
+    <Container bgColor={baseColor.pageBackground}>
       <MainHeader
         navigation={props.navigation}
         title={'Favorites'}
         page={route.name}
       />
 
-      <View style={styles.bodyContainer}>
+      <BodyContainer>
         <FlatList
           data={favList}
           numColumns={2}
@@ -26,17 +39,14 @@ const Favorite = props => {
             return <Card data={item} navigation={props.navigation} />;
           }}
         />
-      </View>
-    </View>
+      </BodyContainer>
+    </Container>
   );
 };
 
 export default Favorite;
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: baseColor.pageBackground,
-  },
+  mainContainer: {},
   bodyContainer: {alignSelf: 'center', marginTop: 5, marginBottom: 20, flex: 1},
 });

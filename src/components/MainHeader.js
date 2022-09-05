@@ -10,24 +10,54 @@ import React, {useState} from 'react';
 import {baseColor} from '../utils/Theme';
 import Icon from 'react-native-vector-icons/Feather';
 import {FavIcon} from '../utils/Constant';
+import styled from 'styled-components/native';
+
+const Container = styled.View`
+  flex: 1;
+  background-color: ${props => props.bgColor};
+  padding: 10px;
+  justify-content: space-between;
+  flex-direction: row;
+
+  width: 375px;
+  height: 74px;
+  left: 0px;
+  top: 0px;
+
+  background: #070707;
+`;
+const TitleText = styled.Text`
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 23.0226px;
+  line-height: 27px;
+  color: ${props => props.txtColor};
+`;
+const CloseBtn = styled.View`
+  justify-content: space-between;
+  flex-direction: row;
+`;
+const TouchableView = styled.TouchableOpacity`
+  margin: 3;
+  align-self: center;
+  margin-horizontal: 10;
+`;
 
 const MainHeader = props => {
   return (
-    <View style={styles.headerContainer}>
-      <Text
-        style={[
-          styles.headerTitle,
-          {
-            color:
-              props.page && props.page == 'Favorite'
-                ? baseColor.secondaryColor
-                : baseColor.lightColor,
-          },
-        ]}>
+    <Container bgColor={baseColor.pageBackground}>
+      <TitleText
+        txtColor={
+          props.page && props.page == 'Favorite'
+            ? baseColor.secondaryColor
+            : baseColor.lightColor
+        }>
         {props.title}
-      </Text>
+      </TitleText>
+
       {props.page && props.page == 'Favorite' ? (
-        <View style={styles.iconView}>
+        <CloseBtn>
           <Icon
             name="x"
             size={23}
@@ -37,9 +67,9 @@ const MainHeader = props => {
               props.navigation.goBack();
             }}
           />
-        </View>
+        </CloseBtn>
       ) : (
-        <View style={styles.iconView}>
+        <CloseBtn>
           <Icon
             name="search"
             size={23}
@@ -51,7 +81,7 @@ const MainHeader = props => {
           />
 
           <TouchableOpacity
-            style={{margin: 3, alignSelf: 'center', marginHorizontal: 10}}
+            style={{}}
             onPress={() => {
               props.navigation.navigate('Favorite');
             }}>
@@ -60,9 +90,9 @@ const MainHeader = props => {
               source={require('../assets/images/fav.png')}
             />
           </TouchableOpacity>
-        </View>
+        </CloseBtn>
       )}
-    </View>
+    </Container>
   );
 };
 

@@ -1,11 +1,4 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {baseColor} from '../utils/Theme';
 import Icon from 'react-native-vector-icons/Feather';
@@ -13,17 +6,11 @@ import {FavIcon} from '../utils/Constant';
 import styled from 'styled-components/native';
 
 const Container = styled.View`
-  flex: 1;
   background-color: ${props => props.bgColor};
-  padding: 10px;
+  padding: 20px;
   justify-content: space-between;
   flex-direction: row;
-
-  width: 375px;
   height: 74px;
-  left: 0px;
-  top: 0px;
-
   background: #070707;
 `;
 const TitleText = styled.Text`
@@ -39,9 +26,14 @@ const CloseBtn = styled.View`
   flex-direction: row;
 `;
 const TouchableView = styled.TouchableOpacity`
-  margin: 3;
+  margin: 3px;
   align-self: center;
-  margin-horizontal: 10;
+  margin-horizontal: 10px;
+`;
+
+const FavButton = styled.TouchableOpacity`
+  align-self: center;
+  margin-left: 10px;
 `;
 
 const MainHeader = props => {
@@ -80,8 +72,7 @@ const MainHeader = props => {
             }}
           />
 
-          <TouchableOpacity
-            style={{}}
+          <FavButton
             onPress={() => {
               props.navigation.navigate('Favorite');
             }}>
@@ -89,7 +80,7 @@ const MainHeader = props => {
               style={{height: 20, width: 23}}
               source={require('../assets/images/fav.png')}
             />
-          </TouchableOpacity>
+          </FavButton>
         </CloseBtn>
       )}
     </Container>
@@ -97,21 +88,3 @@ const MainHeader = props => {
 };
 
 export default MainHeader;
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    backgroundColor: baseColor.mainHeaderBackground,
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  headerTitle: {
-    fontFamily: 'Roboto-Bold',
-    color: baseColor.lightColor,
-    fontSize: 23,
-  },
-  iconView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-});

@@ -1,9 +1,11 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import SearchHeader from '../components/SearchHeader';
 import {baseColor} from '../utils/Theme';
 import {GET_SEARCH_CHARACTER} from '../utils/urls';
 import Card from '../components/Card';
+import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const Search = props => {
   const [filterData, setFilterData] = useState([]);
@@ -27,20 +29,110 @@ const Search = props => {
       getSearchChar();
     }
   }, [searchTxt]);
+
+  const MainContainer = styled.View`
+    flex: 1;
+    background-color: ${props => props.bgColor};
+  `;
+  const BodyContainer = styled.View`
+    flex: 1;
+    margin: 10px;
+  `;
+  const TxtHeader = styled.Text`
+    height: 28px;
+    left: 24px;
+    top: 138px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 28px;
+    color: ${props => props.color};
+  `;
+  const TxtContaint = styled.Text`
+    height: 28px;
+    left: 24px;
+    top: 166px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 28px;
+
+    color: #c4c4c4;
+  `;
+
+  const SerachContainer = styled.View`
+    align-items: center;
+    padding-left: 10px;
+    flex-direction: row;
+    padding-right: 10px;
+  `;
+
+  const TxtInput = styled.TextInput`
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 100;
+    font-size: 33.2549px;
+    line-height: 39px;
+    width: 80%;
+    color: #ffffff;
+  `;
+
   return (
-    <View style={styles.mainContainer}>
-      <SearchHeader
+    <MainContainer bgColor={baseColor.pageBackground}>
+      {/* <SearchHeader
         navigation={props.navigation}
+        val={searchTxt}
         searchTxt={txt => {
+          console.log('88888888', txt);
           setSearchTxt(txt);
         }}
-      />
-      <View style={styles.bodyContainer}>
+      /> */}
+
+      <SerachContainer>
+        <Icon
+          name="arrow-left"
+          size={24}
+          color={baseColor.lightColor}
+          onPress={() => {
+            // setInputVal('');
+            // props.searchTxt('');
+            setSearchTxt('');
+            props.navigation.goBack();
+          }}
+        />
+        <TxtInput
+          placeholderTextColor={baseColor.darkColor}
+          // autoFocus={true}
+          placeholder="Search"
+          // value={props.val}
+          onChangeText={txt => {
+            setSearchTxt(txt);
+          }}
+        />
+        <Icon
+          name="x"
+          size={24}
+          color={baseColor.lightColor}
+          style={{}}
+          onPress={() => {
+            // setInputVal('');
+            // props.searchTxt('');
+            setSearchTxt('');
+          }}
+        />
+      </SerachContainer>
+
+      <BodyContainer>
         {searchTxt.length > 0 && searchData.length == 0 ? (
-          <View>
-            <Text style={styles.headerText}>No Caharacter Found</Text>
-            <Text style={styles.containetText}>Try Again</Text>
-          </View>
+          <>
+            <TxtHeader color={baseColor.secondaryColor}>
+              No Caharacter Found
+            </TxtHeader>
+            <TxtContaint>Try Again</TxtContaint>
+          </>
         ) : (
           <FlatList
             data={searchData ? searchData : []}
@@ -50,34 +142,9 @@ const Search = props => {
             }}
           />
         )}
-      </View>
-    </View>
+      </BodyContainer>
+    </MainContainer>
   );
 };
 
 export default Search;
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: baseColor.pageBackground,
-    // backgroundColor: '#fff',
-  },
-  bodyContainer: {
-    flex: 1,
-    marginVertical: 10,
-    marginHorizontal: 10,
-  },
-  headerText: {
-    fontSize: 14,
-    fontFamily: 'Roboto-Light',
-    color: baseColor.secondaryColor,
-    marginVertical: 7,
-  },
-  containetText: {
-    fontSize: 14,
-    fontFamily: 'Roboto-Light',
-    color: baseColor.lightColor,
-    marginVertical: 2,
-  },
-});

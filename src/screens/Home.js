@@ -108,8 +108,8 @@ const Home = props => {
   const route = useRoute();
 
   const Container = styled.View`
-    background-color: ${props => props.bgColor};
     flex: 1;
+    background-color: ${props => props.bgColor};
   `;
 
   const ContainerBody = styled.View`

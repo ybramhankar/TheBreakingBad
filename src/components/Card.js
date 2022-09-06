@@ -4,6 +4,7 @@ import {baseColor} from '../utils/Theme';
 
 import {addFavorite, removeFavorite} from '../redux/actions';
 import {useSelector, useDispatch} from 'react-redux';
+import styled from 'styled-components/native';
 const Card = props => {
   let characters = props.data;
   const dispatch = useDispatch();
@@ -18,82 +19,102 @@ const Card = props => {
     return false;
   };
 
+  const MainContainer = styled.TouchableOpacity`
+    height: 258;
+    width: 180;
+    margin-left: 5;
+    margin-right: 5;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #000000;
+  `;
+
+  const CharImg = styled.Image`
+    height: 80%;
+    border-radius: 10px;
+  `;
+
+  const InfoContainer = styled.View`
+    flex-direction: row;
+    height: 20%;
+    margin: 3px;
+  `;
+
+  const CharName = styled.Text`
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #ffffff;
+  `;
+
+  const CharNickName = styled.Text`
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #ffffff;
+  `;
+
+  const NameConatiner = styled.View`
+    width: 75%;
+    justify-content: center;
+  `;
+  const FavContainer = styled.View`
+    justify-content: center;
+    width: 25%;
+  `;
+
+  const FavImg = styled.Image`
+    margin: 3px;
+    align-self: center;
+  `;
+
+  const FavTouch = styled.TouchableOpacity`
+    height: 20px;
+    width: 23px;
+  `;
+
   return (
-    <TouchableOpacity
-      style={styles.container}
+    <MainContainer
+      disabled={false}
       onPress={() => {
         props.navigation.navigate('Details', props.data);
       }}>
-      <Image
-        style={styles.charImg}
+      <CharImg
         source={{
           uri: props.data && props.data.img ? props.data.img : '',
         }}
       />
-      <View style={styles.infoContainer}>
-        <View style={styles.nameContainer}>
-          <Text style={styles.charName}>{props.data.name}</Text>
-          <Text style={styles.charNickName}>{props.data.nickname}</Text>
-        </View>
-        <View style={styles.favContainer}>
-          <TouchableOpacity
-            style={{margin: 3, alignSelf: 'center'}}
+
+      <InfoContainer>
+        <NameConatiner>
+          <CharName>{props.data.name}</CharName>
+          <CharNickName>{props.data.nickname}</CharNickName>
+        </NameConatiner>
+        <FavContainer>
+          <FavTouch
             onPress={() => {
               exists(props.data)
                 ? dispatch(removeFavorite(props.data))
                 : dispatch(addFavorite(props.data));
             }}>
-            <Image
-              style={{height: 20, width: 23}}
+            <FavImg
               source={
                 exists(props.data)
                   ? require('../assets/images/fav.png')
                   : require('../assets/images/nfav.png')
               }
             />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </TouchableOpacity>
+          </FavTouch>
+        </FavContainer>
+      </InfoContainer>
+    </MainContainer>
   );
 };
 
 export default Card;
-
-const styles = StyleSheet.create({
-  container: {
-    height: 258,
-    width: 180,
-    marginHorizontal: 5,
-    marginVertical: 10,
-    backgroundColor: baseColor.pageBackground,
-  },
-  charImg: {
-    height: '80%',
-    borderRadius: 10,
-  },
-  addFavImg: {height: 20, width: 23},
-  infoContainer: {
-    flexDirection: 'row',
-    height: '20%',
-    margin: 3,
-  },
-  favContainer: {
-    width: '25%',
-    justifyContent: 'center',
-  },
-  nameContainer: {
-    width: '75%',
-    justifyContent: 'center',
-  },
-  charName: {
-    fontFamily: 'Roboto-Bold',
-    fontSize: 16,
-    color: baseColor.lightColor,
-  },
-  charNickName: {
-    fontFamily: 'Roboto-Light',
-    fontSize: 14,
-    color: baseColor.lightColor,
-  },
-});

@@ -2,57 +2,63 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import {baseColor} from '../utils/Theme';
+import styled from 'styled-components/native';
 
 const SearchHeader = props => {
-  const [inputVal, setInputVal] = useState('');
+  // const [inputVal, setInputVal] = useState('');
+
+  const SerachContainer = styled.View`
+    align-items: center;
+    padding-left: 10px;
+    flex-direction: row;
+    padding-right: 10px;
+  `;
+
+  const TxtInput = styled.TextInput`
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 100;
+    font-size: 33.2549px;
+    line-height: 39px;
+    width: 80%;
+    color: #ffffff;
+  `;
+
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-      }}>
+    <SerachContainer>
       <Icon
         name="arrow-left"
         size={24}
         color={baseColor.lightColor}
         onPress={() => {
-          setInputVal('');
+          // setInputVal('');
           props.searchTxt('');
           props.navigation.goBack();
         }}
       />
-      <TextInput
-        style={styles.inputStyle}
+      <TxtInput
         placeholderTextColor={baseColor.darkColor}
-        autoFocus={true}
+        // autoFocus={true}
         placeholder="Search"
-        value={inputVal}
+        value={props.val}
         onChangeText={txt => {
-          setInputVal(txt);
+          // setInputVal(txt);
+          console.log(txt);
           props.searchTxt(txt);
-        }}></TextInput>
+        }}
+      />
       <Icon
         name="x"
         size={24}
         color={baseColor.lightColor}
         style={{}}
         onPress={() => {
-          setInputVal('');
+          // setInputVal('');
           props.searchTxt('');
         }}
       />
-    </View>
+    </SerachContainer>
   );
 };
 
 export default SearchHeader;
-
-const styles = StyleSheet.create({
-  inputStyle: {
-    fontSize: 30,
-    marginHorizontal: 10,
-    width: '80%',
-    color: baseColor.lightColor,
-  },
-});
